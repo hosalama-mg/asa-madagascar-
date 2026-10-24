@@ -1,0 +1,180 @@
+
+<!DOCTYPE html>
+<html lang="mg">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#147d48">
+  <title>ASA - Mitady asa, mila mpiasa</title>
+  <style>
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      font-family: Arial, sans-serif;
+      background: #f4f8f5;
+      color: #19352a;
+    }
+    header {
+      background: #147d48;
+      color: white;
+      text-align: center;
+      padding: 26px 16px;
+    }
+    .logo {
+      font-size: 42px;
+      font-weight: bold;
+      color: #ffbd45;
+    }
+    header p { margin-bottom: 0; }
+    main {
+      max-width: 600px;
+      margin: auto;
+      padding: 18px;
+    }
+    .card {
+      background: white;
+      padding: 20px;
+      border-radius: 14px;
+      margin-bottom: 16px;
+      box-shadow: 0 2px 8px #0000000c;
+    }
+    h2 { color: #147d48; }
+    .btn {
+      display: block;
+      width: 100%;
+      padding: 15px;
+      margin: 10px 0;
+      border: 0;
+      border-radius: 9px;
+      background: #147d48;
+      color: white;
+      font-size: 17px;
+      font-weight: bold;
+      cursor: pointer;
+    }
+    .orange { background: #ed8b22; }
+    input, select, textarea {
+      width: 100%;
+      padding: 12px;
+      margin: 6px 0 12px;
+      border: 1px solid #cbd8ce;
+      border-radius: 8px;
+      font-size: 16px;
+    }
+    .warning {
+      border-left: 5px solid #ed8b22;
+    }
+    .hidden { display: none; }
+    footer {
+      text-align: center;
+      padding: 20px;
+      color: #52665a;
+      font-size: 13px;
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <div class="logo">🤝 ASA</div>
+    <h1>Mitady asa? Mila mpiasa?</h1>
+    <p>Ho an'ny Malagasy rehetra, manana diplaoma na tsia.</p>
+  </header>
+
+  <main>
+    <section class="card">
+      <h2>Tongasoa eto amin'ny ASA!</h2>
+      <p>Mitadiava asa na olona afaka manampy anao.</p>
+      <button class="btn" onclick="showSection('jobs')">
+        Mitady asa
+      </button>
+      <button class="btn orange" onclick="showSection('workers')">
+        Mitady mpiasa
+      </button>
+    </section>
+
+    <section id="jobs" class="card hidden">
+      <h2>Mitady asa</h2>
+      <label>Asa tadiavina</label>
+      <input id="jobSearch" placeholder="Ohatra: mpanadio, mpanao zaridaina">
+      <label>Toerana</label>
+      <input id="jobLocation" placeholder="Ohatra: Antananarivo">
+      <button class="btn" onclick="searchJobs()">Hikaroka</button>
+      <div id="jobResults"></div>
+    </section>
+
+    <section id="workers" class="card hidden">
+      <h2>Mitady mpiasa</h2>
+      <label>Karazana asa</label>
+      <input id="workerJob" placeholder="Ohatra: mpanadio trano">
+      <label>Toerana</label>
+      <input id="workerLocation" placeholder="Ohatra: Toamasina">
+      <label>Karama atolotra (Ar)</label>
+      <input id="salary" type="number" min="0" placeholder="Ohatra: 20000">
+      <label>Famaritana ny asa</label>
+      <textarea id="description" placeholder="Lazao ny asa sy ny ora hanaovana azy"></textarea>
+      <button class="btn orange" onclick="previewJob()">
+        Hijery ny tolotra
+      </button>
+      <div id="jobPreview"></div>
+    </section>
+
+    <section class="card warning">
+      <h2>⚠️ CAUTION — Mitandrema!</h2>
+      <ul>
+        <li>Aza mandoa vola mialoha amin'olona mampiahiahy.</li>
+        <li>Aza mizara PIN na kaody miafina.</li>
+        <li>Hamarino ny asa sy ny karama alohan'ny hanaiky.</li>
+        <li>Mitahiry porofo momba ny fifanarahana.</li>
+        <li>Mitatitra amin'ny mpitantana raha misy fisolokiana.</li>
+      </ul>
+    </section>
+
+    <section class="card">
+      <h2>Fiarovana ny volanao</h2>
+      <p>Ny rafitra fandoavana dia mbola hatsangana sy hohamarinina ara-dalàna. Aza mandefa vola amin'ny alalan'ity pejy andrana ity.</p>
+    </section>
+  </main>
+
+  <footer>ASA Madagascar — Dika andrana voalohany</footer>
+
+  <script>
+    function showSection(id) {
+      document.getElementById(id).classList.remove('hidden');
+      document.getElementById(id).scrollIntoView({
+        behavior: 'smooth'
+      });
+    }
+
+    function searchJobs() {
+      const term = document.getElementById('jobSearch').value;
+      const place = document.getElementById('jobLocation').value;
+      document.getElementById('jobResults').innerHTML =
+        '<p>Ny fikarohana: ' + escapeText(term) +
+        ' — ' + escapeText(place) +
+        '.</p><p>Mbola hampidirina ny lisitry ny asa rehefa misy tahiry angona.</p>';
+    }
+
+    function previewJob() {
+      const job = document.getElementById('workerJob').value;
+      const place = document.getElementById('workerLocation').value;
+      const salary = document.getElementById('salary').value;
+      const desc = document.getElementById('description').value;
+      document.getElementById('jobPreview').innerHTML =
+        '<h3>Topi-maso amin’ny tolotra</h3><p>Asa: ' +
+        escapeText(job) + '</p><p>Toerana: ' +
+        escapeText(place) + '</p><p>Karama: ' +
+        escapeText(salary) + ' Ar</p><p>' +
+        escapeText(desc) + '</p><p>Tsy mbola navoaka amin’ny Internet ity tolotra ity.</p>';
+    }
+
+    function escapeText(value) {
+      return String(value).replace(/[&<>"']/g, function(char) {
+        return {
+          '&': '&amp;', '<': '&lt;', '>': '&gt;',
+          '"': '&quot;', "'": '&#39;'
+        }[char];
+      });
+    }
+  </script>
+</body>
+</html>
