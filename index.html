@@ -176,5 +176,26 @@
       });
     }
   </script>
+<script type="module">
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/10.14.1/firebase-app.js";
+    import { getFirestore } from "https://www.gstatic.com/firebasejs/10.14.1/firebase-firestore.js";
+    import { getAuth } from "https://www.gstatic.com/firebasejs/10.14.1/firebase-auth.js";
+
+    const firebaseConfig = {
+      apiKey: "AIzaSyBWubSFSfmj0Y5cZTNJsZBKQC4bK8h_BL8",
+      authDomain: "ho-salama.firebaseapp.com",
+      projectId: "ho-salama",
+      storageBucket: "ho-salama.firebasestorage.app",
+      messagingSenderId: "4792819801",
+      appId: "1:4792819801:web:8bd06a3c86c578bbee5148",
+      measurementId: "G-L8G4RMK6H6"
+    };
+
+    const app = initializeApp(firebaseConfig);
+    const db = getFirestore(app);
+    const auth = getAuth(app);
+
+    window.asaFirebase = { app, db, auth };
+  </script>
 </body>
 </html>
